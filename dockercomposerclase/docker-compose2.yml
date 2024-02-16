@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mi-mysql:
+    image: mysql
+    volumes:
+      - mi-mysql-vol:/var/lib/mysql
+    networks:
+      - mi-mysql-red
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword # Asegúrate de cambiar 'rootpassword' por tu propia contraseña segura
+      MYSQL_DATABASE: mydatabase # Opcional: Nombre de la base de datos que quieres crear automáticamente
+
+  mi-dashboard:
+    image: phpmyadmin
+    ports:
+      - "8080:80"
+    networks:
+      - mi-mysql-red
+    environment:
+      PMA_HOST: mi-mysql
+
+
+networks:
+  mi-mysql-red:
+    ipam:
+      config:
+        - subnet: 172.25.0.0/16
+
+volumes:
+  mi-mysql-vol:

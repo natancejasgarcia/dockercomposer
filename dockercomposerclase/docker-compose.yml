@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  mongodb:
+    image: mongo
+    networks:
+      - my_network
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=jorge
+      - MONGO_INITDB_ROOT_PASSWORD=jorge
+
+  mongo-express:
+    image: mongo-express
+    networks:
+      - my_network
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=jorge
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=jorge
+
+networks:
+  my_network:
+
+volumes:
+  mongo_data:
+
+
+
+
+
+
